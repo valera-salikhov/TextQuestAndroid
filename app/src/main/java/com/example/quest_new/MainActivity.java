@@ -27,10 +27,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         player = new Character();
         story = new Story();
         textView.setText("====================" + story.current_situation.subject + "====================\n" + story.current_situation.text);
+        choices[0].setText(story.current_situation.ch1);
+        choices[1].setText(story.current_situation.ch2);
+        choices[2].setText(story.current_situation.ch3);
+
     }
 
     @Override
     public void onClick(View v) {
+
         int choice = 0;
         if (v.getId() == R.id.choice1) {
             choice = 1;
@@ -41,10 +46,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.choice3) {
             choice = 3;
         }
-        if (story.isEnd()) {
-            textView.setText("====================the end====================");
-        }
         story.go(choice);
         textView.setText("====================" + story.current_situation.subject + "====================\n" + story.current_situation.text);
+        if (story.isEnd()) {
+            textView.setText("====================" + story.current_situation.subject + "====================\n" + story.current_situation.text + "\n====================the end====================");
+        }
+        choices[0].setText(story.current_situation.ch1);
+        choices[1].setText(story.current_situation.ch2);
+        choices[2].setText(story.current_situation.ch3);
+        for (Button b: choices) {
+            if (b.getText().length() == 0) {
+               b.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }
